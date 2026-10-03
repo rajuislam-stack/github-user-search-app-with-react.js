@@ -3,8 +3,8 @@ import sunIcon from "../assets/icon-sun.svg";
 import { useState } from "react"
 
 
-export default function Header() {
-  const [isDark,setIsDark] = useState(false);
+export default function Header({isDark,setIsDark}) {
+  
 
   let displayTheme;
 
@@ -15,12 +15,15 @@ export default function Header() {
     displayTheme = (<> <p>Dark </p> <img src={moonIcon} alt="dark-theme" /> </>)
   }
   return (
-    <div>
+    <div className="flex justify-around">
       <h1>devfinder</h1>
 
-      <div className="flex bg-indigo-200">
+      <button 
+      className="flex bg-indigo-200"
+       onClick={()=>setIsDark(!isDark)}
+      >
         {displayTheme}
-      </div>
+      </button>
     </div>
   )
 }

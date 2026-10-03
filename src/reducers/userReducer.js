@@ -1,3 +1,3 @@
-export function userReducer(users,action){
+export function searchReducer(users,action){
 
 }
