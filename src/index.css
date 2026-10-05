@@ -1,21 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 @import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@layer base{
-  html{
-    @apply bg-gray-100 dark:bg-gray-900
-  }
-  
-  a{
-    @apply text-blue-900 font-semibold
+@theme {
+  --color-body: #F6F8FF;
+  --font-body: 'Space Mono', monospace;
+  --color-dark-body: #141D2F;
+  --color-dark-content: #1E2A47;
+  --color-info-section: #141D2F;
+  --color-info-section-light: #F6F8FF;
+}
+
+@layer base {
+  body {
+    @apply bg-body font-body dark:bg-dark-body dark:text-gray-300 w-full min-h-screen;
   }
 
-  input{
-    @apply border-2 rounded 
+  a {
+    @apply text-blue-950 font-semibold dark:text-gray-300;
   }
 
-  button{
-    @apply bg-purple-400 rounded-xl shadow-2xl px-4 py-2
+  input {
+    @apply rounded;
+  }
+
+  h1 {
+    @apply text-2xl font-bold;
+  }
+}
+
+@layer components {
+  .app-container {
+    @apply w-full max-w-sm px-4 mx-auto my-8 flex flex-col justify-start gap-6 items-center sm:max-w-lg lg:max-w-2xl;
+  }
+
+  .header {
+    @apply w-full flex justify-between items-center;
+  }
+
+  .searchbar {
+    @apply bg-white rounded-xl shadow-lg w-full flex justify-between items-center gap-2 min-h-14 p-2 px-3 sm:px-4 dark:bg-dark-content;
+  }
+
+  .profile-section {
+    @apply bg-white rounded-xl shadow-lg w-full p-5 sm:p-8 dark:bg-dark-content;
+  }
+
+  .profile-avatar {
+    @apply w-16 h-16 sm:w-24 sm:h-24 shrink-0 overflow-hidden rounded-full;
+  }
+
+  .profile-avatar img {
+    @apply block w-full h-full max-w-none object-cover rounded-full;
+  }
+
+  .profile-stats {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-1 sm:gap-4 bg-body dark:bg-dark-body rounded-xl w-full p-3 sm:p-5;
+  }
+
+  .profile-links {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4 mt-6;
   }
 }

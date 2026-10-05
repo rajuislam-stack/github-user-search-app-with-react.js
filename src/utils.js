@@ -15,3 +15,25 @@ export function formatDate(dateString = ''){
 
   return `${day} ${month} ${year}`;
 }
+
+
+//Initializing theme
+
+export function initializeTheme(){ 
+    let savedTheme = localStorage.getItem('theme');
+   
+    if(savedTheme === 'dark'){
+      return "dark";
+    }
+    else if(savedTheme === 'light'){
+      return 'light';
+    }
+    else{
+    let isDark =  window.matchMedia('(prefers-color-scheme: dark)').matches;
+     
+    if(isDark) return 'dark';
+    
+    return 'light';
+    }
+}
+

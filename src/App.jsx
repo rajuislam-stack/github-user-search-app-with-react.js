@@ -3,13 +3,14 @@ import Header from "./components/Header";
 import ProfileSection from "./components/ProfileSection";
 import SearchBar from "./components/SearchBar";
 import { UserContext } from "./contexts/userDataContext";
+import { initializeTheme } from "./utils";
 
 export default function App() {
   const [userData, setUserData] = useState({});
   const [isFailedToFetch,setIsFailedToFetch] = useState(false);
   const [search,setSearch] = useState('octocat');
   const [isSearching,setIsSearching] = useState(false);
-  const [isDark,setIsDark] = useState(false);
+  const [theme,setTheme] = useState(initializeTheme());
   let ref = useRef(null);
 
 
@@ -53,7 +54,7 @@ export default function App() {
   useEffect(()=>{
     let htmlElement = document.documentElement;
 
-     if(isDark){
+     if(theme == 'dark'){
       htmlElement.classList.add('dark');
       htmlElement.classList.remove('light');
      }
@@ -61,7 +62,11 @@ export default function App() {
       htmlElement.classList.add('light');
       htmlElement.classList.remove('dark');
      }
-  },[isDark])
+ 
+
+     localStorage.setItem('theme', theme);
+
+  },[theme])
 
 
 
@@ -74,7 +79,7 @@ export default function App() {
      clearTimeout(ref.current);
      ref.current =  setTimeout(()=>{
        setIsSearching(false);
-      },700)
+      },500)
 
        return ;
      }
@@ -82,6 +87,13 @@ export default function App() {
      setSearch(text);
      setIsSearching(true);
   }
+
+
+  function handleThemeChange(){
+     setTheme(theme => theme == 'dark' ? 'light': 'dark');
+  }
+
+
 
 
   let displayUserInfo;
@@ -93,7 +105,7 @@ export default function App() {
   else if(isFailedToFetch){
      displayUserInfo = (<>
      <div>
-       <p>No results found!</p>
+       <p className="text-lg font-bold text-center">No results found!</p>
        <p>We could'nt find any GitHub users mathing your search.Plase double-check the username and try again.</p>
      </div>
      </>)
@@ -110,11 +122,11 @@ export default function App() {
 
 
   return (
-    <div >
-      <Header isDark={isDark} setIsDark = {setIsDark}/>
-      <SearchBar onHandleSearch = {handleSearch}/>
+    <div className="app-container">
+      <Header theme={theme} onHandleThemeChange = {handleThemeChange}/>
+      <SearchBar onHandleSearch = {handleSearch} isFailedToFetch = {isFailedToFetch} isSearching={isSearching}/>
       
-      {displayUserInfo};
+      {displayUserInfo}
     </div>
   )
 }
